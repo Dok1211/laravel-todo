@@ -9,11 +9,12 @@ class ExampleTest extends TestCase
     /**
      * A basic functional test example.
      *
-     * @return void
+     * @test void
      */
-    public function testBasicExample()
+    public function トップページが正しいレスポンスを返すかテスト()
     {
-        $this->visit('/')
-             ->see('Laravel 5');
+        $response = $this->call('GET', '/');
+
+        $this->assertEquals(200, $response->getStatusCode());
     }
 }
