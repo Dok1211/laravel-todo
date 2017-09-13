@@ -8,14 +8,6 @@ class TodoTableSeeder extends Seeder
 {
     public function run()
     {
-        $this->call(UsersTableSeeder::class);
-        $this->call(TodosTableSeeder::class);
-    }
-}
-class UsersTableSeeder extends Seeder
-{
-    public function run()
-    {
         for ($i = 1; $i < 3; $i++) {
             User::create([
                 'name' => "user_{$i}",
@@ -23,12 +15,7 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt('administrator'),
             ]);
         }
-    }
-}
-class TodosTableSeeder extends Seeder
-{
-    public function run()
-    {
+
         for ($i = 1; $i < 11; $i++) {
             if ($i < 6) {
                 $user_id = 1;
