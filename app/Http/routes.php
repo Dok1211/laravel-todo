@@ -18,4 +18,4 @@ Route::get('/', function () {
 Route::resource('todo', 'TodoController');
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'TodoController@index');
