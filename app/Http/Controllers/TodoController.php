@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Todo;
+use App\User;
+
+use Illuminate\Support\Facades\Auth;
+
 
 class TodoController extends Controller
 {
@@ -13,13 +17,15 @@ class TodoController extends Controller
 
 	public function __construct(Todo $todo)
 	{
+        $this->middleware('auth');
 		$this->todo = $todo;
 	}
 
     public function index()
     {
-    	$todos = $this->todo->all();
-    	return view('todo.index',compact('todos'));
+        $id = Auth::id();
+        $todos = User::find($id)->todo;
+        return view('todo.index', compact('todos'));
     }
 
     public function create()
@@ -29,7 +35,9 @@ class TodoController extends Controller
 
     public function store(Request $request)
     {
-    	$input = $request->all();
+    	$id = Auth::id();
+        $input = $request->all() + array('user_id'=>$id);
+
     	$this->todo->fill($input);
     	$this->todo->save();
 
@@ -38,7 +46,7 @@ class TodoController extends Controller
 
     public function edit($id)
     {
-    	$todo = $this->todo->find($id);
+        $todo = $this->todo->find($id);
     	return view('todo.edit')->with(compact('todo'));
     }
 
@@ -47,7 +55,7 @@ class TodoController extends Controller
     	$input = $request->all();
     	$this->todo->where('id', $id)->update(['title' => $input['title']]);
 
-    	return redirect()->to('todo');
+    	return redirect()->to('todo/');
     }
 
     public function destroy($id)
@@ -55,6 +63,6 @@ class TodoController extends Controller
     	$data = $this->todo->find($id);
     	$data->delete();
 
-    	return redirect()->to('todo');
+    	return redirect()->to('todo/');
     }
 }
