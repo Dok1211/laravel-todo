@@ -55,7 +55,7 @@ class TodoController extends Controller
     public function update(Request $request,$id)
     {
     	$input = $request->all();
-    	$this->todo->where('id', $id)->update(['title' => $input['title']]);
+    	$this->todo->find($id)->update(['title' => $input['title']]);
 
     	return redirect()->to('todo');
     }
