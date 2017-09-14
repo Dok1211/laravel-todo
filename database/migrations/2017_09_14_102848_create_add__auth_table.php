@@ -25,6 +25,8 @@ class CreateAddAuthTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('todos', function ($table) {
+            $table->dropColumn('user_id');
+        });
     }
 }
