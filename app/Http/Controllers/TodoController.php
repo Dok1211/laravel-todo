@@ -14,17 +14,21 @@ use Illuminate\Support\Facades\Auth;
 class TodoController extends Controller
 {
 	private $todo;
+    private $user;
+    private $auth_id;
 
-	public function __construct(Todo $todo)
+	public function __construct(Todo $todo, User $user)
 	{
         $this->middleware('auth');
-		$this->todo = $todo;
+        $this->todo = $todo;
+		$this->user = $user;
+        $this->auth_id = \Auth::id();
+
 	}
 
     public function index()
     {
-        $id = Auth::id();
-        $todos = User::find($id)->todo;
+        $todos = $this->user->find($this->auth_id)->todo;
         return view('todo.index', compact('todos'));
     }
 
@@ -35,8 +39,7 @@ class TodoController extends Controller
 
     public function store(Request $request)
     {
-    	$id = Auth::id();
-        $input = $request->all() + array('user_id'=>$id);
+        $input = $request->all() + array('user_id'=>$this->auth_id);
 
     	$this->todo->fill($input);
     	$this->todo->save();

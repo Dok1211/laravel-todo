@@ -11,11 +11,9 @@
 |
 */
 
+Route::auth();
 Route::get('/', function () {
     return view('/auth/login');
 });
-
-Route::resource('todo', 'TodoController');
-Route::auth();
-
 Route::get('/home', 'TodoController@index');
+Route::resource('todo', 'TodoController');
