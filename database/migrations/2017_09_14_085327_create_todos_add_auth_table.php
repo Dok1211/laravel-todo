@@ -12,8 +12,6 @@ class CreateTodosAddAuthTable extends Migration
      */
     public function up()
     {
-        Schema::drop('todos');
-
         Schema::create('todos', function(Blueprint $table)
         {
             $table->increments('id');
