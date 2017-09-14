@@ -39,7 +39,6 @@ class TodoController extends Controller
     {
         $id = Auth::id();
         $input = $request->all() + array('user_id' => $id);
-        // dd($input);
 
     	$this->todo->fill($input);
     	$this->todo->save();
