@@ -22,8 +22,7 @@ class TodoController extends Controller
         $this->middleware('auth');
         $this->todo = $todo;
 		$this->user = $user;
-        $this->auth_id = \Auth::id();
-
+        $this->auth_id = Auth::id();
 	}
 
     public function index()
