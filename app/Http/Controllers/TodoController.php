@@ -57,7 +57,7 @@ class TodoController extends Controller
     	$input = $request->all();
     	$this->todo->where('id', $id)->update(['title' => $input['title']]);
 
-    	return redirect()->to('todo/');
+    	return redirect()->to('todo');
     }
 
     public function destroy($id)
@@ -65,6 +65,6 @@ class TodoController extends Controller
     	$data = $this->todo->find($id);
     	$data->delete();
 
-    	return redirect()->to('todo/');
+    	return redirect()->to('todo');
     }
 }
