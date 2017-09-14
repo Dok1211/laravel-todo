@@ -15,19 +15,18 @@ class TodoController extends Controller
 {
 	private $todo;
     private $user;
-    private $auth_id;
 
 	public function __construct(Todo $todo, User $user)
 	{
         $this->middleware('auth');
         $this->todo = $todo;
 		$this->user = $user;
-        $this->auth_id = Auth::id();
 	}
 
     public function index()
     {
-        $todos = $this->user->find($this->auth_id)->todo;
+        $id = Auth::id();
+        $todos = $this->user->find($id)->todo;
         return view('todo.index', compact('todos'));
     }
 
@@ -38,7 +37,8 @@ class TodoController extends Controller
 
     public function store(Request $request)
     {
-        $input = $request->all() + array('user_id'=>$this->auth_id);
+        $id = Auth::id();
+        $input = $request->all() + array('user_id '=> $id);
 
     	$this->todo->fill($input);
     	$this->todo->save();
@@ -49,7 +49,7 @@ class TodoController extends Controller
     public function edit($id)
     {
         $todo = $this->todo->find($id);
-    	return view('todo.edit')->with(compact('todo'));
+    	return view('todo.edit',compact('todo'));
     }
 
     public function update(Request $request,$id)
