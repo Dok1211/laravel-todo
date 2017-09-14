@@ -25,8 +25,8 @@ class TodoController extends Controller
 
     public function index()
     {
-        $id = Auth::id();
-        $todos = $this->user->find($id)->todo;
+        $user_id = Auth::id();
+        $todos = $this->user->find($user_id)->todo;
         return view('todo.index', compact('todos'));
     }
 
@@ -37,8 +37,8 @@ class TodoController extends Controller
 
     public function store(Request $request)
     {
-        $id = Auth::id();
-        $input = $request->all() + array('user_id' => $id);
+        $user_id = Auth::id();
+        $input = $request->all() + array('user_id' => $user_id);
 
     	$this->todo->fill($input);
     	$this->todo->save();
